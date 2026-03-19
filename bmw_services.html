@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW | Customer Services</title>
+    <!-- Favicon -->
+    <link rel="icon" href="new_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Services Page Specific Styles */
+        
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-dark-1);
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            max-width: 800px;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        /* Services Grid */
+        .services-section {
+            padding: 6rem 0;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: var(--bmw-blue);
+        }
+        [data-theme="light"] .service-card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+        .service-icon-wrapper {
+            background: var(--bg-dark-2);
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        [data-theme="light"] .service-icon-wrapper {
+            background: #f8f9fa;
+        }
+        .service-icon {
+            font-size: 4rem;
+            color: var(--bmw-blue);
+        }
+        .service-body {
+            padding: 2.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-heading);
+        }
+        .service-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Navbar -->
+    <nav class="navbar transparent">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="new_logo.png" alt="BMW Logo">
+            </a>
+            <div class="nav-links">
+                <a href="bmw_models_catalog.html">Models</a>
+                <a href="bmw_services.html" class="active">Services</a>
+                <a href="bmw_about_page.html">About</a>
+                <a href="bmw_owners_discussion.html">Owners</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" id="theme-toggle" title="Toggle Dark Mode">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </a>
+                <span class="material-symbols-outlined hamburger">menu</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <!-- Reusing a suitable image for the background -->
+        <img src="driving_assistant.jpg" alt="BMW Services Hero" class="hero-bg">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content fade-in">
+            <h1 class="hero-title">Uncompromising Care</h1>
+            <p style="font-size: 1.25rem; font-weight: 300; letter-spacing: 1px;">Premium services exclusively designed for The Ultimate Driving Machine.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section scroll-animate">
+        <div class="container">
+            <h2 class="section-title">BMW Customer Services</h2>
+            <p class="section-desc">Experience peace of mind with our comprehensive suite of maintenance, protection, and mobility services.</p>
+            
+            <div class="services-grid">
+                
+                <!-- Ultimate Care -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">verified_user</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">BMW Ultimate Care</h3>
+                        <p class="service-desc">Comprehensive maintenance programs covering all factory-recommended maintenance including oil changes, filter replacements, and spark plugs for up to 3 years or 36,000 miles.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">View Plans</a>
+                    </div>
+                </div>
+
+                <!-- Roadside Assistance -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">emergency_share</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Roadside Assistance</h3>
+                        <p class="service-desc">24/7/365 emergency support anywhere in the country. From flat tire changes and jump-starts to towing services directly to the nearest authorized BMW Center.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">Get Help</a>
+                    </div>
+                </div>
+
+                <!-- ConnectedDrive -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">satellite_alt</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">BMW ConnectedDrive</h3>
+                        <p class="service-desc">Digital services connecting you to your BMW. Remotely lock/unlock your vehicle, locate it using your smartphone, pre-condition the climate, and receive over-the-air updates.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">Explore Features</a>
+                    </div>
+                </div>
+
+                <!-- Financial Services -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">account_balance</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Financial Services</h3>
+                        <p class="service-desc">Flexible leasing and financing options tailored to your lifestyle. Manage your account online, explore end-of-lease options, and protect your investment with BMW insurance.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">Manage Account</a>
+                    </div>
+                </div>
+
+                <!-- Charging Services -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">ev_station</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">BMW Charging</h3>
+                        <p class="service-desc">Seamless solutions for your electrified BMW. Includes complimentary charging sessions at partner networks, installation of home Wallboxes, and public charging route calculation.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">Discover Charging</a>
+                    </div>
+                </div>
+
+                <!-- Service Network -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <span class="material-symbols-outlined service-icon">handyman</span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Authorized Service Network</h3>
+                        <p class="service-desc">State-of-the-art diagnostic equipment and Original BMW Parts installed by BMW Trained Technicians ensuring your vehicle remains 100% BMW.</p>
+                        <a href="#" class="btn btn-outline" style="align-self: flex-start;">Schedule Service</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Unified Footer -->
+    <footer style="background: var(--bg-dark-1); border-top: 1px solid var(--border-color); padding: 4rem 0 2rem; margin-top: auto;">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <img src="new_logo.png" alt="BMW Logo" style="height: 40px; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">The Ultimate Driving Machine. Experience pure aesthetic appeal and uncompromising power.</p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Explore</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Home</a></li>
+                    <li><a href="bmw_models_catalog.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Models</a></li>
+                    <li><a href="bmw_about_page.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">About BMW</a></li>
+                    <li><a href="bmw_services.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Connect</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="bmw_owners_discussion.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Owners Community</a></li>
+                    <li><a href="bmw_model_specifications.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Build & Price</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+            <p style="color: var(--text-muted); font-size: 0.75rem;">© 2026 BMW North America, LLC. The BMW name, model names and logo are registered trademarks.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+</body>
+</html>
+

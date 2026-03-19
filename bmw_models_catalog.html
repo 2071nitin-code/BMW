@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW | All Models – Find Your Ultimate Driving Machine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="description" content="Browse the full BMW model lineup. Filter by series, body style, and fuel type. Find your perfect BMW and configure it today.">
+    <!-- Favicon -->
+    <link rel="icon" href="new_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ============================================================
+           CATALOG PAGE – SPECIFIC STYLES
+           ============================================================ */
+
+        /* Sticky solid navbar */
+
+        /* ── PAGE HEADER ─────────────────────────────────────── */
+        .page-header {
+            padding: 7rem 0 0;
+            background: var(--bg-color);
+        }
+        .page-header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding-bottom: 2rem;
+        }
+        .page-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1;
+            margin: 0;
+        }
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: var(--font-body-catalog);
+            margin-top: 0.4rem;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        /* ── SEARCH BAR ───────────────────────────────────────── */
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            padding: 0.55rem 1.25rem;
+            min-width: 240px;
+            transition: border-color 0.3s;
+        }
+        .search-wrapper:focus-within {
+            border-color: var(--bmw-blue);
+        }
+        .search-wrapper .material-symbols-outlined {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        .search-wrapper input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-color);
+            font-family: var(--font-body-catalog);
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        .search-wrapper input::placeholder { color: var(--text-muted); }
+
+        /* ── FILTER STRIP ─────────────────────────────────────── */
+        .filter-strip {
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            background: var(--bg-color);
+            position: sticky;
+            top: 67px;    /* navbar height */
+            z-index: 90;
+        }
+        .filter-strip-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* Series pills */
+        .filter-pills {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-family: var(--font-body-catalog);
+            font-weight: 600;
+            margin-right: 0.25rem;
+            white-space: nowrap;
+        }
+        .filter-pill {
+            padding: 0.4rem 1.1rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-color);
+            font-family: var(--font-body-catalog);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .filter-pill:hover {
+            border-color: var(--bmw-blue);
+            color: var(--bmw-blue);
+        }
+        .filter-pill.active {
+            background: var(--bmw-blue);
+            color: #fff;
+            border-color: var(--bmw-blue);
+        }
+
+        /* Fuel type radios */
+        .fuel-filters {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .fuel-option {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            font-family: var(--font-body-catalog);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .fuel-option:hover { color: var(--text-color); }
+        .fuel-option input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .fuel-option input[type="radio"]:checked {
+            border-color: var(--bmw-blue);
+            background: var(--bmw-blue);
+            box-shadow: inset 0 0 0 2px var(--bg-color);
+        }
+        .fuel-option input[type="radio"]:checked + span {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        /* ── TOOLBAR (count + sort) ───────────────────────────── */
+        .grid-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0 0.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .result-count {
+            font-family: var(--font-body-catalog);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .result-count strong { color: var(--text-color); }
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .sort-select {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-family: var(--font-body-catalog);
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .sort-select:focus { outline: none; border-color: var(--bmw-blue); }
+        .view-toggle {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .view-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.4rem 0.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .view-btn.active, .view-btn:hover {
+            border-color: var(--bmw-blue);
+            color: var(--bmw-blue);
+        }
+        .view-btn .material-symbols-outlined { font-size: 1.15rem; }
+
+        /* ── MODELS GRID ──────────────────────────────────────── */
+        .catalog-section {
+            padding: 0 0 5rem;
+            background: var(--bg-color);
+        }
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+        @media (max-width: 1100px) { .models-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 680px)  { .models-grid { grid-template-columns: 1fr; } }
+
+        /* ── MODEL CARD ───────────────────────────────────────── */
+        .model-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.165,0.84,0.44,1),
+                        box-shadow 0.35s ease,
+                        border-color 0.35s ease;
+        }
+        .model-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(6,83,182,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+        [data-theme="dark"] .model-card:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        /* Hidden cards (for Load More) */
+        .model-card.hidden { display: none; }
+
+        /* Category badge */
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(6,83,182,0.85);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            z-index: 5;
+        }
+
+        /* Wishlist heart */
+        .wishlist-btn {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            z-index: 5;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: rgba(255,255,255,0.7);
+        }
+        .wishlist-btn:hover {
+            background: var(--bmw-blue);
+            border-color: var(--bmw-blue);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        .wishlist-btn.active {
+            background: var(--bmw-blue);
+            border-color: var(--bmw-blue);
+            color: #fff;
+        }
+        .wishlist-btn .material-symbols-outlined {
+            font-size: 1.05rem;
+            font-variation-settings: 'FILL' 0;
+            transition: font-variation-settings 0.2s;
+        }
+        .wishlist-btn.active .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Card image */
+        .model-img-wrap {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            height: 210px;
+            overflow: hidden;
+            position: relative;
+        }
+        [data-theme="light"] .model-img-wrap {
+            background: linear-gradient(135deg, #e8edf5 0%, #d6e0ef 100%);
+        }
+        .model-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.55s cubic-bezier(0.33,1,0.68,1);
+        }
+        .model-card:hover .model-img { transform: scale(1.06); }
+
+        /* Card body */
+        .model-info {
+            padding: 1.4rem 1.4rem 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .model-tagline {
+            font-size: 0.7rem;
+            color: var(--bmw-light-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.3rem;
+        }
+        .model-title {
+            font-size: 1.3rem;
+            font-family: var(--font-heading);
+            font-weight: 900;
+            margin-bottom: 0.15rem;
+        }
+        .model-year {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-body-catalog);
+            margin-bottom: 0.6rem;
+            font-weight: 400;
+            text-transform: none;
+        }
+        .model-price {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-family: var(--font-body-catalog);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .model-price strong {
+            color: var(--text-color);
+            font-size: 1.05rem;
+        }
+
+        /* Mini spec bar */
+        .model-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.85rem 0;
+            margin-bottom: 1.1rem;
+        }
+        .spec-item { text-align: center; }
+        .spec-value {
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+        .spec-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--font-body-catalog);
+        }
+
+        /* Card actions */
+        .model-actions {
+            margin-top: auto;
+            padding: 0 0 1.4rem;
+        }
+        .btn-configure {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--bmw-blue);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-configure:hover {
+            background: #054191;
+            transform: translateY(-1px);
+        }
+        .btn-configure .material-symbols-outlined { font-size: 1rem; }
+
+        /* ── LOAD MORE ────────────────────────────────────────── */
+        .load-more-wrap {
+            text-align: center;
+            padding: 3rem 0 1rem;
+        }
+        .btn-load-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 2.5rem;
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-load-more:hover {
+            border-color: var(--bmw-blue);
+            color: var(--bmw-blue);
+            background: rgba(6,83,182,0.06);
+        }
+        .btn-load-more .material-symbols-outlined {
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+        .btn-load-more:hover .material-symbols-outlined {
+            transform: translateY(3px);
+        }
+        .btn-load-more.hidden { display: none; }
+
+        /* No results */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 5rem 0;
+            color: var(--text-muted);
+            font-family: var(--font-body-catalog);
+        }
+
+        /* ── FOOTER ───────────────────────────────────────────── */
+        .catalog-footer {
+            background: #0a0a0a;
+            color: #ccc;
+            padding: 4.5rem 0 0;
+            border-top: 1px solid #222;
+        }
+        [data-theme="light"] .catalog-footer {
+            background: #111;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 540px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+        .footer-brand img {
+            height: 44px;
+            margin-bottom: 1.25rem;
+            opacity: 0.9;
+        }
+        .footer-brand p {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #777;
+            max-width: 280px;
+            font-family: var(--font-body-catalog);
+        }
+        .footer-col h4 {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 1.25rem;
+        }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul li {
+            margin-bottom: 0.7rem;
+        }
+        .footer-col ul li a {
+            color: #777;
+            font-size: 0.85rem;
+            font-family: var(--font-body-catalog);
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+        .footer-col ul li a:hover { color: #fff; }
+
+        .footer-bottom {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-copy {
+            font-size: 0.78rem;
+            color: #555;
+            font-family: var(--font-body-catalog);
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a {
+            font-size: 0.78rem;
+            color: #555;
+            font-family: var(--font-body-catalog);
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #ccc; }
+        .footer-socials {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .social-icon {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.85rem;
+            transition: all 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            border-color: var(--bmw-blue);
+            color: #fff;
+            background: var(--bmw-blue);
+        }
+        .social-icon .material-symbols-outlined { font-size: 1rem; }
+    </style>
+</head>
+<body class="catalog-page" data-theme="dark">
+
+    <!-- Navbar -->
+    <header class="navbar transparent">
+        <div class="container">
+            <a href="index.html" class="nav-brand" aria-label="BMW Home">
+                <img src="new_logo.png" alt="BMW Logo" width="40" height="40">
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="bmw_models_catalog.html" class="active">Models</a>
+                <a href="bmw_services.html">Services</a>
+                <a href="bmw_about_page.html">About</a>
+                <a href="bmw_owners_discussion.html">Owners</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </a>
+                <span class="material-symbols-outlined hamburger" role="button" aria-label="Menu" tabindex="0">menu</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-inner">
+                <div>
+                    <h1 class="page-title fade-in">All BMW Models</h1>
+                    <p class="page-subtitle fade-in">Find your Ultimate Driving Machine</p>
+                </div>
+                <!-- Search Bar -->
+                <div class="search-wrapper fade-in" style="animation-delay:0.15s">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" id="model-search" placeholder="Search models…" autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Strip (sticky) -->
+    <div class="filter-strip">
+        <div class="container">
+            <div class="filter-strip-inner">
+                <!-- Row 1: Series Pills -->
+                <div class="filter-pills">
+                    <span class="filter-label">Series</span>
+                    <button class="btn btn-outline" onclick="compareTray.classList.remove('visible')">Clear All</button>
+                    <a href="bmw_model_specifications.html" class="btn btn-primary">Compare Now</a>
+                    <button class="filter-pill active" data-series="all">All</button>
+                    <button class="filter-pill" data-series="sedan">Sedan</button>
+                    <button class="filter-pill" data-series="suv">SUV</button>
+                    <button class="filter-pill" data-series="coupe">Coupe</button>
+                    <button class="filter-pill" data-series="m-series">M Series</button>
+                    <button class="filter-pill" data-series="i-series">i Series</button>
+                    <button class="filter-pill" data-series="x-series">X Series</button>
+                </div>
+                <!-- Row 2: Fuel Type Radios -->
+                <div class="fuel-filters">
+                    <span class="filter-label">Fuel Type</span>
+                    <label class="fuel-option">
+                        <input type="radio" name="fuel" value="all" checked>
+                        <span>All</span>
+                    </label>
+                    <label class="fuel-option">
+                        <input type="radio" name="fuel" value="petrol">
+                        <span>Petrol</span>
+                    </label>
+                    <label class="fuel-option">
+                        <input type="radio" name="fuel" value="diesel">
+                        <span>Diesel</span>
+                    </label>
+                    <label class="fuel-option">
+                        <input type="radio" name="fuel" value="electric">
+                        <span>Electric</span>
+                    </label>
+                    <label class="fuel-option">
+                        <input type="radio" name="fuel" value="hybrid">
+                        <span>Hybrid</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Toolbar + Cards -->
+    <section class="catalog-section">
+        <div class="container">
+
+            <!-- Toolbar: count + view toggle + sort -->
+            <div class="grid-toolbar">
+                <p class="result-count"><strong id="result-count">8</strong> models found</p>
+                <div class="toolbar-right">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="grid-view-btn" title="Grid View">
+                            <span class="material-symbols-outlined">grid_view</span>
+                        </button>
+                        <button class="view-btn" id="list-view-btn" title="List View">
+                            <span class="material-symbols-outlined">view_list</span>
+                        </button>
+                    </div>
+                    <select class="sort-select" id="sort-select">
+                        <option value="recommended">Sort: Recommended</option>
+                        <option value="price-asc">Price: Low → High</option>
+                        <option value="price-desc">Price: High → Low</option>
+                        <option value="performance">Performance</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Models Grid -->
+            <div class="models-grid" id="models-grid">
+
+                <!-- Card 1: BMW i7 -->
+                <div class="model-card scroll-animate"
+                     data-series="sedan i-series"
+                     data-fuel="electric"
+                     data-price="25000000"
+                     data-hp="660"
+                     data-name="bmw i7">
+                    <span class="card-badge">Sedan</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-I7.avif" alt="BMW i7 Electric Sedan" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">100% Electric</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW i7</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹2.50 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">660</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">3.5s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">318 mi</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="bmw_model_specifications.html" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: BMW M4 Competition -->
+                <div class="model-card scroll-animate"
+                     data-series="coupe m-series"
+                     data-fuel="petrol"
+                     data-price="18500000"
+                     data-hp="503"
+                     data-name="bmw m4 competition">
+                    <span class="card-badge">Coupe</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-M4.avif" alt="BMW M4 Competition Coupe" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">High Performance Coupe</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW M4 Competition</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹1.85 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">503</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">3.4s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">—</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: BMW X5 M -->
+                <div class="model-card scroll-animate"
+                     data-series="suv m-series x-series"
+                     data-fuel="petrol"
+                     data-price="21200000"
+                     data-hp="617"
+                     data-name="bmw x5 m">
+                    <span class="card-badge">SUV</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-X5.avif" alt="BMW X5 M SUV" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Sports Activity Vehicle</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW X5 M</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹2.12 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">617</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">3.7s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">—</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: BMW 3 Series -->
+                <div class="model-card scroll-animate"
+                     data-series="sedan"
+                     data-fuel="petrol"
+                     data-price="5700000"
+                     data-hp="255"
+                     data-name="bmw 3 series">
+                    <span class="card-badge">Sedan</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-3.avif" alt="BMW 3 Series Sedan" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Iconic Sports Sedan</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW 3 Series</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹57.00 L</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">255</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">5.4s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">—</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 5: BMW i4 M50 -->
+                <div class="model-card scroll-animate"
+                     data-series="sedan m-series i-series"
+                     data-fuel="electric"
+                     data-price="11900000"
+                     data-hp="536"
+                     data-name="bmw i4 m50">
+                    <span class="card-badge">Sedan</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-I4.avif" alt="BMW i4 M50 Electric Sedan" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Electric Performance</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW i4 M50</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹1.19 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">536</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">3.7s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">271 mi</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 6: BMW iX -->
+                <div class="model-card scroll-animate"
+                     data-series="suv i-series x-series"
+                     data-fuel="electric"
+                     data-price="13900000"
+                     data-hp="516"
+                     data-name="bmw ix">
+                    <span class="card-badge">SUV</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-IX.avif" alt="BMW iX Electric SUV" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Electric Vision</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW iX</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹1.39 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">516</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">4.4s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">311 mi</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 7: BMW X7 (initially hidden for Load More) -->
+                <div class="model-card scroll-animate hidden"
+                     data-series="suv x-series"
+                     data-fuel="diesel"
+                     data-price="12200000"
+                     data-hp="375"
+                     data-name="bmw x7">
+                    <span class="card-badge">SUV</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-X7.avif" alt="BMW X7 SUV" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Luxury SAV</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW X7</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹1.22 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">375</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">5.6s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">—</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 8: BMW M8 Gran Coupe (initially hidden for Load More) -->
+                <div class="model-card scroll-animate hidden"
+                     data-series="sedan m-series"
+                     data-fuel="petrol"
+                     data-price="29700000"
+                     data-hp="617"
+                     data-name="bmw m8 gran coupe">
+                    <span class="card-badge">Gran Coupe</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                    <div class="model-img-wrap">
+                        <a href="bmw_model_specifications.html">
+                            <img src="front-M8.avif" alt="BMW M8 Gran Coupe" class="model-img" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+                    <div class="model-info">
+                        <div class="model-tagline">Ultimate Luxury Performance</div>
+                        <a href="bmw_model_specifications.html" style="text-decoration: none; color: inherit;"><h3 class="model-title">BMW M8 Gran Coupe</h3></a>
+                        <p class="model-year">2025</p>
+                        <p class="model-price">From <strong>₹2.97 Cr</strong></p>
+                        <div class="model-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">617</div>
+                                <div class="spec-label">HP</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">3.0s</div>
+                                <div class="spec-label">0-60 mph</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">—</div>
+                                <div class="spec-label">Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-actions" style="padding: 0 1.4rem 1.4rem;">
+                        <a href="#" class="btn-configure">
+                            <span class="material-symbols-outlined">tune</span>
+                            Configure
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- /models-grid -->
+
+            <!-- Load More -->
+            <div class="load-more-wrap">
+                <button class="btn-load-more" id="load-more-btn">
+                    Load More Models
+                    <span class="material-symbols-outlined">expand_more</span>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="catalog-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand column -->
+                <div class="footer-brand">
+                    <img src="logo.png" alt="BMW Logo">
+                    <p>The BMW Group is one of the most successful manufacturers of automobiles and motorcycles in the world with its BMW, MINI, Rolls-Royce and BMW Motorrad brands.</p>
+                </div>
+                <!-- Models -->
+                <div class="footer-col">
+                    <h4>Models</h4>
+                    <ul>
+                        <li><a href="#">Sedans &amp; Wagons</a></li>
+                        <li><a href="#">SUVs &amp; SAVs</a></li>
+                        <li><a href="#">Coupes &amp; Convertibles</a></li>
+                        <li><a href="#">M Series</a></li>
+                        <li><a href="#">Electric – i Series</a></li>
+                    </ul>
+                </div>
+                <!-- Experience -->
+                <div class="footer-col">
+                    <h4>Experience</h4>
+                    <ul>
+                        <li><a href="#">BMW Driving Experience</a></li>
+                        <li><a href="#">BMW ConnectedDrive</a></li>
+                        <li><a href="#">BMW M Performance</a></li>
+                        <li><a href="#">Find a Dealer</a></li>
+                        <li><a href="#">Test Drive</a></li>
+                    </ul>
+                </div>
+                <!-- Company & Legal -->
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About BMW</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Investor Relations</a></li>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter/X">
+                        <span class="material-symbols-outlined">alternate_email</span>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <span class="material-symbols-outlined">thumb_up</span>
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js" defer></script>
+    <script defer>
+    /* ============================================================
+       CATALOG INTERACTIVE LOGIC
+       ============================================================ */
+    (function () {
+
+        const grid        = document.getElementById('models-grid');
+        const allCards    = Array.from(grid.querySelectorAll('.model-card'));
+        const countLabel  = document.getElementById('result-count');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const searchInput = document.getElementById('model-search');
+        const sortSelect  = document.getElementById('sort-select');
+        const seriesPills = document.querySelectorAll('.filter-pill[data-series]');
+        const fuelRadios  = document.querySelectorAll('input[name="fuel"]');
+
+        // View toggle
+        document.getElementById('grid-view-btn').addEventListener('click', function () {
+            grid.style.gridTemplateColumns = '';
+            this.classList.add('active');
+            document.getElementById('list-view-btn').classList.remove('active');
+        });
+        document.getElementById('list-view-btn').addEventListener('click', function () {
+            grid.style.gridTemplateColumns = '1fr';
+            this.classList.add('active');
+            document.getElementById('grid-view-btn').classList.remove('active');
+        });
+
+        // State
+        let activeSeries = 'all';
+        let activeFuel   = 'all';
+        let searchQuery  = '';
+        let sortKey      = 'recommended';
+
+        // Initial order for 'recommended'
+        const originalOrder = [...allCards];
+
+        // FILTER + SORT + SEARCH
+        function applyFilters() {
+            const query = searchQuery.toLowerCase().trim();
+
+            // Which cards match?
+            let matched = allCards.filter(card => {
+                const seriesAttr = card.dataset.series || '';
+                const fuelAttr   = card.dataset.fuel   || '';
+                const nameAttr   = card.dataset.name   || '';
+
+                const seriesOk = activeSeries === 'all' || seriesAttr.includes(activeSeries);
+                const fuelOk   = activeFuel   === 'all' || fuelAttr === activeFuel;
+                const searchOk = !query || nameAttr.includes(query);
+
+                return seriesOk && fuelOk && searchOk;
+            });
+
+            // Sort
+            if (sortKey === 'price-asc') {
+                matched.sort((a, b) => +a.dataset.price - +b.dataset.price);
+            } else if (sortKey === 'price-desc') {
+                matched.sort((a, b) => +b.dataset.price - +a.dataset.price);
+            } else if (sortKey === 'performance') {
+                matched.sort((a, b) => +b.dataset.hp - +a.dataset.hp);
+            } else {
+                // recommended: maintain original order
+                matched.sort((a, b) => originalOrder.indexOf(a) - originalOrder.indexOf(b));
+            }
+
+            const notMatched = allCards.filter(c => !matched.includes(c));
+
+            // Re-order DOM
+            matched.forEach(c => grid.appendChild(c));
+            notMatched.forEach(c => grid.appendChild(c));
+
+            // Show first 6, hide rest
+            const INITIAL = 6;
+            matched.forEach((card, i) => {
+                card.classList.remove('hidden');
+                card.style.display = '';
+                if (i >= INITIAL) card.classList.add('hidden');
+            });
+            notMatched.forEach(card => {
+                card.style.display = 'none';
+                card.classList.remove('hidden');
+            });
+
+            // No-results message
+            let noRes = grid.querySelector('.no-results');
+            if (matched.length === 0) {
+                if (!noRes) {
+                    noRes = document.createElement('div');
+                    noRes.className = 'no-results';
+                    noRes.innerHTML = '<span class="material-symbols-outlined" style="font-size:3rem;display:block;margin-bottom:1rem;color:#444">search_off</span>No models match your filters.';
+                    grid.appendChild(noRes);
+                }
+            } else {
+                if (noRes) noRes.remove();
+            }
+
+            // Count
+            countLabel.textContent = matched.length;
+
+            // Load More button
+            const hiddenInMatched = matched.filter(c => c.classList.contains('hidden'));
+            loadMoreBtn.classList.toggle('hidden', hiddenInMatched.length === 0);
+
+            // Store matched for load-more reference
+            grid._matchedCards = matched;
+        }
+
+        // LOAD MORE
+        loadMoreBtn.addEventListener('click', function () {
+            const matched = grid._matchedCards || [];
+            const stillHidden = matched.filter(c => c.classList.contains('hidden'));
+            const toReveal = stillHidden.slice(0, 4);
+            toReveal.forEach(c => {
+                c.classList.remove('hidden');
+                // Trigger scroll-animate
+                setTimeout(() => c.classList.add('visible'), 50);
+            });
+            const remaining = matched.filter(c => c.classList.contains('hidden'));
+            if (remaining.length === 0) loadMoreBtn.classList.add('hidden');
+        });
+
+        // SERIES PILLS
+        seriesPills.forEach(pill => {
+            pill.addEventListener('click', function () {
+                seriesPills.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                activeSeries = this.dataset.series;
+                applyFilters();
+            });
+        });
+
+        // FUEL RADIOS
+        fuelRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                activeFuel = this.value;
+                applyFilters();
+            });
+        });
+
+        // SEARCH
+        searchInput.addEventListener('input', function () {
+            searchQuery = this.value;
+            applyFilters();
+        });
+
+        // SORT
+        sortSelect.addEventListener('change', function () {
+            sortKey = this.value;
+            applyFilters();
+        });
+
+        // WISHLIST
+        grid.addEventListener('click', function (e) {
+            const btn = e.target.closest('.wishlist-btn');
+            if (!btn) return;
+            btn.classList.toggle('active');
+        });
+
+        // Initial render
+        applyFilters();
+
+    })();
+    </script>
+</body>
+</html>
+

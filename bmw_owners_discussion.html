@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW Owners Community | Discuss & Connect</title>
+    <meta name="description" content="Exclusive discussion forum for BMW owners. Share experiences, performance tips, and maintenance advice with the global community.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Favicon -->
+    <link rel="icon" href="new_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* --- Community Specific Styles --- */
+
+        .community-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('interior_luxury.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0 4rem;
+            text-align: center;
+            color: #fff;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2.5rem;
+            padding: 3rem 0 6rem;
+        }
+
+        @media (max-width: 900px) {
+            .community-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Sidebar */
+        .community-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.25rem;
+            color: var(--bmw-blue);
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-color);
+            background: transparent;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .category-item:hover, .category-item.active {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+        /* Discussion Feed */
+        .discussion-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-forum {
+            flex-grow: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-forum input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .search-forum .material-symbols-outlined {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .discussion-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .discussion-card:hover {
+            border-color: var(--bmw-blue);
+            transform: translateY(-2px);
+        }
+
+        .discussion-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bmw-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .discussion-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-heading);
+        }
+
+        .discussion-excerpt {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .discussion-stats {
+            display: flex;
+            gap: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Post Creation */
+        .post-creation {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .post-input-trigger {
+            background: var(--bg-dark-1);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="catalog-page" data-theme="dark">
+
+    <!-- Navbar -->
+    <header class="navbar transparent">
+        <div class="container">
+            <a href="index.html" class="nav-brand" aria-label="BMW Home">
+                <img src="new_logo.png" alt="BMW Logo" width="40" height="40">
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="bmw_models_catalog.html">Models</a>
+                <a href="bmw_services.html">Services</a>
+                <a href="bmw_about_page.html">About</a>
+                <a href="bmw_owners_discussion.html" class="active">Owners</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" id="theme-toggle" title="Toggle Dark Mode" aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </a>
+                <span class="material-symbols-outlined hamburger" role="button" aria-label="Menu" tabindex="0">menu</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+    <!-- Community Hero -->
+    <section class="community-hero">
+        <div class="container">
+            <h1 class="page-title fade-in">Owners Community</h1>
+            <p class="fade-in" style="margin-top: 1rem; font-size: 1.1rem; opacity: 0.9;">Connect with over 1 million BMW enthusiasts worldwide.</p>
+        </div>
+    </section>
+
+    <!-- Community Content -->
+    <div class="container community-grid">
+        
+        <!-- Sidebar -->
+        <aside class="community-sidebar fade-in">
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Categories</h3>
+                <div class="category-list">
+                    <div class="category-item active">
+                        <span class="material-symbols-outlined">forum</span>
+                        <span>General Discussion</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="material-symbols-outlined">bolt</span>
+                        <span>M-Series Performance</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="material-symbols-outlined">electric_car</span>
+                        <span>i-Series Electric</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="material-symbols-outlined">build</span>
+                        <span>Technical & Maintenance</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="material-symbols-outlined">photo_camera</span>
+                        <span>Events & Meets</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Top Contributors</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="user-avatar" style="background-color: var(--bmw-light-blue);">AM</div>
+                        <div style="font-size: 0.85rem;"><strong>Alexander M.</strong><br><span style="color: var(--text-muted);">M3 Competition</span></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="user-avatar">SR</div>
+                        <div style="font-size: 0.85rem;"><strong>Siddharth R.</strong><br><span style="color: var(--text-muted);">i7 Electric</span></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <div class="discussion-feed fade-in" style="animation-delay: 0.15s;" role="feed" aria-label="Discussion Feed">
+            
+            <div class="feed-header">
+                <div class="search-forum">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Search discussions...">
+                </div>
+                <button class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 40px; font-size: 0.8rem;">
+                    <span class="material-symbols-outlined" style="margin-right: 0.5rem; font-size: 1.1rem;">add_circle</span>
+                    New Topic
+                </button>
+            </div>
+
+            <div class="post-creation">
+                <div class="post-input-trigger">
+                    What's on your mind, BMW Owner?
+                </div>
+            </div>
+
+            <!-- Thread 1 -->
+            <div class="discussion-card">
+                <div class="discussion-meta">
+                    <div class="user-avatar">AM</div>
+                    <div><strong>Alexander M.</strong> posted in <strong>M-Series Performance</strong> • 2h ago</div>
+                </div>
+                <h2 class="discussion-title">Best aftermarket exhaust for the new G80 M3?</h2>
+                <p class="discussion-excerpt">Looking to enhance the auditory experience of my new M3 Competition. Has anyone tried the Akrapovič system yet? I'm curious about the drone at highway speeds...</p>
+                <div class="discussion-stats">
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">mode_comment</span>
+                        <span>42 Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">thumb_up</span>
+                        <span>128 Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <span>1.2k Views</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thread 2 -->
+            <div class="discussion-card">
+                <div class="discussion-meta">
+                    <div class="user-avatar" style="background-color: var(--bmw-light-blue);">SR</div>
+                    <div><strong>Siddharth R.</strong> posted in <strong>i-Series Electric</strong> • 5h ago</div>
+                </div>
+                <h2 class="discussion-title">Real-world charging times for i7 in Bangalore</h2>
+                <p class="discussion-excerpt">Managed to get my hands on the i7 recently! Here's a detailed log of my home charging setup and public fast-charger experiences across the city so far...</p>
+                <div class="discussion-stats">
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">mode_comment</span>
+                        <span>18 Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">thumb_up</span>
+                        <span>56 Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <span>800 Views</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thread 3 -->
+            <div class="discussion-card">
+                <div class="discussion-meta">
+                    <div class="user-avatar">MK</div>
+                    <div><strong>Mark K.</strong> posted in <strong>Events & Meets</strong> • 1d ago</div>
+                </div>
+                <h2 class="discussion-title">BMW Munich Plant Tour - Summer 2026 Meetup?</h2>
+                <p class="discussion-excerpt">Thinking of organizing a group tour for the community members. Let's get a headcount of who might be interested in a weekend trip to Bavaria!</p>
+                <div class="discussion-stats">
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">mode_comment</span>
+                        <span>85 Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">thumb_up</span>
+                        <span>312 Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <span>4.5k Views</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    </main>
+
+    <!-- Footer -->
+    <!-- Unified Footer -->
+    <footer style="background: var(--bg-dark-1); border-top: 1px solid var(--border-color); padding: 4rem 0 2rem; margin-top: auto;">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <img src="new_logo.png" alt="BMW Logo" loading="lazy" width="40" height="40" style="margin-bottom: 1.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">The Ultimate Driving Machine. Experience pure aesthetic appeal and uncompromising power.</p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Explore</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Home</a></li>
+                    <li><a href="bmw_models_catalog.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Models</a></li>
+                    <li><a href="bmw_about_page.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">About BMW</a></li>
+                    <li><a href="bmw_services.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Connect</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="bmw_owners_discussion.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Owners Community</a></li>
+                    <li><a href="bmw_model_specifications.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Build & Price</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+            <p style="color: var(--text-muted); font-size: 0.75rem;">© 2026 BMW North America, LLC. The BMW name, model names and logo are registered trademarks.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+

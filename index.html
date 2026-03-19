@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover the complete lineup of BMW high-performance luxury vehicles, electric cars, and sports SUVs. Welcome to the Ultimate Driving Machine.">
+    <title>BMW | The Ultimate Driving Machine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- CSS -->
+    <!-- Favicon -->
+    <link rel="icon" href="new_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Landing Page Specific Styles */
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-dark-1);
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.8;
+            transition: transform 10s ease-out;
+            animation: zoomBg 20s infinite alternate;
+        }
+        @keyframes zoomBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            max-width: 800px;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Performance Stats Bar */
+        .stats-bar {
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 4rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .stat-card {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+        }
+        .stat-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--bmw-blue);
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: var(--font-heading);
+            margin-bottom: 0.5rem;
+            color: var(--bmw-light-blue);
+        }
+        .stat-label {
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.875rem;
+            color: var(--text-color);
+        }
+
+        /* Model Series Slider */
+        .models-series {
+            background-color: var(--bg-secondary);
+            overflow: hidden;
+            position: relative;
+        }
+        .slider-container {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding-bottom: 2rem;
+            scrollbar-width: none; /* Firefox */
+        }
+        .slider-container::-webkit-scrollbar {
+            display: none; /* Chrome */
+        }
+        .series-card {
+            min-width: 350px;
+            flex: 1;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .series-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .series-card:hover .series-img {
+            transform: scale(1.08);
+        }
+        .series-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            color: #fff;
+        }
+        .series-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Interior Luxury Section */
+        .interior-section {
+            background-color: var(--bg-color);
+        }
+        .interior-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        @media (max-width: 900px) {
+            .interior-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .interior-image img {
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .feature-list {
+            margin: 2rem 0 3rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        .feature-icon {
+            color: var(--bmw-blue);
+            font-size: 1.8rem;
+        }
+
+        /* Innovation Section */
+        .innovation-section {
+            background-color: var(--bg-dark-2);
+            color: #fff;
+        }
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        @media (max-width: 768px) {
+            .innovation-grid { grid-template-columns: 1fr; }
+        }
+        .innovation-card {
+            background: var(--bg-dark-3);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #333;
+        }
+        .innovation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--bmw-blue);
+        }
+        .innovation-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .innovation-body {
+            padding: 2.5rem;
+        }
+        .innovation-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .innovation-text {
+            color: #aaa;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            position: relative;
+            padding: 8rem 0;
+            text-align: center;
+            background-color: var(--bg-dark-1);
+            color: #fff;
+            overflow: hidden;
+        }
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(6,83,182,0.3) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Navbar -->
+    <header class="navbar transparent">
+        <div class="container">
+            <a href="index.html" class="nav-brand" aria-label="BMW Home">
+                <!-- Using a placeholder for BMW Logo -->
+                <img src="new_logo.png" alt="BMW Logo" width="40" height="40">
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="bmw_models_catalog.html">Models</a>
+                <a href="bmw_services.html">Services</a>
+                <a href="bmw_about_page.html">About</a>
+                <a href="bmw_owners_discussion.html">Owners</a>
+            </nav>
+            <div class="nav-actions">
+                <span class="material-symbols-outlined" role="button" aria-label="Search" tabindex="0">search</span>
+                <a href="#" id="theme-toggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </a>
+                <span class="material-symbols-outlined hamburger" role="button" aria-label="Menu" tabindex="0">menu</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+    <!-- Cinematic Hero Section -->
+    <section class="hero" id="hero">
+    <!-- BMW Hero Image -->
+    <img src="hero_matte_bmw.png" alt="BMW Ultimate Driving Machine" class="hero-bg" fetchpriority="high" decoding="async">
+    <div class="hero-overlay"></div>
+        <div class="container hero-content fade-in">
+            <h1 class="hero-title">The Ultimate<br>Driving Machine</h1>
+        </div>
+    </section>
+
+    <!-- Model Series Section -->
+    <section class="models-series">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Discover the Lineup</h2>
+            <p class="section-desc scroll-animate">Explore the diverse range of power, luxury, and innovation.</p>
+            
+            <div class="slider-container scroll-animate">
+                <!-- M Series -->
+                <a href="bmw_models_catalog.html" class="series-card">
+                    <img src="series_m.jpg" alt="BMW M Series Driving" class="series-img" loading="lazy" decoding="async">
+                    <div class="series-overlay">
+                        <h3 class="series-title">M Series</h3>
+                        <p>High performance motorsports division.</p>
+                    </div>
+                </a>
+                <!-- i Series -->
+                <a href="bmw_models_catalog.html" class="series-card">
+                    <img src="series_i.jpg" alt="BMW i Series Electric" class="series-img" loading="lazy" decoding="async">
+                    <div class="series-overlay">
+                        <h3 class="series-title">i Series</h3>
+                        <p>100% electric. 100% BMW.</p>
+                    </div>
+                </a>
+                <!-- X Series -->
+                <a href="bmw_models_catalog.html" class="series-card">
+                    <img src="series_x.jpg" alt="BMW X Series SUV" class="series-img" loading="lazy" decoding="async">
+                    <div class="series-overlay">
+                        <h3 class="series-title">X Series</h3>
+                        <p>Sports Activity Vehicles. Boundless freedom.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interior Luxury Section -->
+    <section class="interior-section">
+        <div class="container">
+            <div class="interior-grid">
+                <div class="interior-content scroll-animate">
+                    <h2 class="section-title" style="text-align: left;">Crafted for the Exceptional</h2>
+                    <p class="section-desc" style="text-align: left; margin-bottom: 2rem;">Step inside an environment where every detail caters to your senses. Meticulously designed for ultimate comfort and advanced digital integration.</p>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="material-symbols-outlined feature-icon">chair</span>
+                            <span>Executive Lounge Seating</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="material-symbols-outlined feature-icon">smart_display</span>
+                            <span>31" BMW Theatre Screen</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="material-symbols-outlined feature-icon">highlight</span>
+                            <span>Dynamic Ambient Lighting</span>
+                        </li>
+                    <a href="bmw_model_specifications.html#interior" class="btn btn-outline">Explore Interior</a>
+                </div>
+                <div class="interior-image scroll-animate">
+                    <img src="interior_luxury.jpg" alt="BMW Luxury Interior with Ambient Lighting" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section class="innovation-section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Forward-Thinking Innovation</h2>
+            <p class="section-desc scroll-animate" style="color: #aaa;">Pioneering technology that intuitively adapts to you.</p>
+            
+            <div class="innovation-grid">
+                <div class="innovation-card scroll-animate">
+                    <img src="idrive.png" alt="BMW iDrive Interface" class="innovation-img" loading="lazy" decoding="async">
+                    <div class="innovation-body">
+                        <h3 class="innovation-title">BMW iDrive & Curved Display</h3>
+                        <p class="innovation-text">Experience a seamless flow of information and entertainment via natural voice, touch, and intelligent personal assistance.</p>
+                    </div>
+                </div>
+                <div class="innovation-card scroll-animate" style="transition-delay: 0.1s;">
+                    <img src="driving_assistant.jpg" alt="BMW Driving Assistant Technology display" class="innovation-img" loading="lazy" decoding="async">
+                    <div class="innovation-body">
+                        <h3 class="innovation-title">Driving Assistant Level 2+</h3>
+                        <p class="innovation-text">Enjoy hands-free driving capabilities on highways with advanced sensor technology keeping you completely safe.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Removed embedded About Section; view bmw_about_page.html directly -->
+
+    <!-- Final CTA Section -->
+    <section class="cta-section">
+        <div class="cta-glow"></div>
+        <div class="container cta-content scroll-animate">
+            <h2 class="hero-title" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">READY TO DEFINE THE ROAD?</h2>
+            <div class="cta-actions">
+                <a href="bmw_models_catalog.html" class="btn btn-primary">Build Your BMW</a>
+                <a href="#" class="btn btn-outline btn-outline-light">Find a Dealer</a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Unified Footer -->
+    <footer style="background: var(--bg-dark-1); border-top: 1px solid var(--border-color); padding: 4rem 0 2rem; margin-top: auto;">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <img src="new_logo.png" alt="BMW Logo" loading="lazy" width="40" height="40" style="margin-bottom: 1.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">The Ultimate Driving Machine. Experience pure aesthetic appeal and uncompromising power.</p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Explore</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Home</a></li>
+                    <li><a href="bmw_models_catalog.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Models</a></li>
+                    <li><a href="bmw_about_page.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">About BMW</a></li>
+                    <li><a href="bmw_services.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 1rem; font-family: var(--font-heading); text-transform: uppercase; font-size: 0.9rem;">Connect</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="bmw_owners_discussion.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Owners Community</a></li>
+                    <li><a href="bmw_model_specifications.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Build & Price</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+            <p style="color: var(--text-muted); font-size: 0.75rem;">© 2026 BMW North America, LLC. The BMW name, model names and logo are registered trademarks.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+

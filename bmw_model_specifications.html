@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View the full specifications, performance metrics, and technological integrations for BMW vehicles. Configure your ultimate driving machine.">
+    <title>BMW i7 M70 | Specifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- CSS -->
+    <!-- Favicon -->
+    <link rel="icon" href="new_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Specifications Page Specific Styles */
+        
+        .navbar {
+            background: var(--bg-secondary) !important;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+        }
+
+        /* Hero Product Section */
+        .product-hero {
+            padding: 4rem 0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        @media (max-width: 1024px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+        
+        .product-info h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-tagline {
+            font-size: 1.25rem;
+            color: var(--bmw-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+        }
+        .specs-badges {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .spec-badge {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .badge-val {
+            font-size: 2rem;
+            font-weight: 900;
+            font-family: var(--font-heading);
+            color: var(--bmw-light-blue);
+        }
+        .badge-lbl {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* Image Gallery */
+        .product-visuals {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .main-hero-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-thumbnails {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        .gallery-thumb {
+            width: 120px;
+            height: 80px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.3s;
+            object-fit: cover;
+            background: var(--bg-secondary);
+        }
+        .gallery-thumb.active, .gallery-thumb:hover {
+            opacity: 1;
+            border-color: var(--bmw-blue);
+        }
+
+        /* Specification Tabs */
+        .specs-tabs-section {
+            background: var(--bg-secondary);
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .specs-table th, .specs-table td {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .specs-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            width: 40%;
+        }
+
+        /* Feature Grid */
+        .features-section {
+            padding: 6rem 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        @media (max-width: 900px) {
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+        .feature-item {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: var(--bmw-blue);
+        }
+        .feature-item h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Color Configurator */
+        .color-configurator {
+            text-align: center;
+        }
+        .color-swatches {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            box-shadow: 0 0 0 1px var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .color-swatch:hover, .color-swatch.active {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px var(--bmw-blue);
+        }
+
+        /* Package Pricing Cards */
+        .packages-section {
+            background: var(--bg-secondary);
+            padding: 6rem 0;
+        }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        @media (max-width: 900px) {
+            .packages-grid { grid-template-columns: 1fr; }
+        }
+        .package-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .package-card.recommended {
+            border-color: var(--bmw-blue);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        @media (max-width: 900px) {
+            .package-card.recommended { transform: scale(1); }
+        }
+        .package-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bmw-blue);
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .package-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .package-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--bmw-light-blue);
+            margin-bottom: 2rem;
+        }
+        .package-features {
+            text-align: left;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .package-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .package-features li .material-symbols-outlined {
+            color: var(--bmw-blue);
+            font-size: 1.25rem;
+        }
+
+        /* Sticky Purchase Bar */
+        .sticky-purchase-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-dark-1);
+            border-top: 1px solid #333;
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+        [data-theme="light"] .sticky-purchase-bar {
+            background: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            color: #000;
+        }
+        .purchase-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .purchase-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .purchase-model {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .purchase-price {
+            color: var(--bmw-light-blue);
+            font-size: 1rem;
+        }
+        .purchase-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        /* Padding for the body to prevent content from hiding behind sticky bar */
+        body { padding-bottom: 80px; }
+    </style>
+</head>
+<body class="catalog-page" data-theme="dark">
+
+    <!-- Navbar -->
+    <header class="navbar transparent">
+        <div class="container">
+            <a href="index.html" class="nav-brand" aria-label="BMW Home">
+                <img src="new_logo.png" alt="BMW Logo" width="40" height="40">
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="bmw_models_catalog.html" class="active">Models</a>
+                <a href="bmw_services.html">Services</a>
+                <a href="bmw_about_page.html">About</a>
+                <a href="bmw_owners_discussion.html">Owners</a>
+            </nav>
+            <div class="nav-actions">
+                <span class="material-symbols-outlined nav-location" role="button" aria-label="Location" tabindex="0">location_on</span>
+                <span class="material-symbols-outlined nav-user" role="button" aria-label="User Profile" tabindex="0">person</span>
+                <a href="#" id="theme-toggle" title="Toggle Dark Mode" aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </a>
+                <span class="material-symbols-outlined hamburger" role="button" aria-label="Menu" tabindex="0">menu</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+    <!-- Hero Product Section -->
+    <section class="product-hero">
+        <div class="container">
+            <div class="product-grid">
+                
+                <div class="product-info fade-in">
+                    <div class="product-tagline">100% Electric Performance</div>
+                    <h1>BMW i7 M70</h1>
+                    <div class="product-price">From ₹2.50 Cr</div>
+                    
+                    <div class="specs-badges">
+                        <div class="spec-badge">
+                            <div class="badge-val">660</div>
+                            <div class="badge-lbl">Max HP</div>
+                        </div>
+                        <div class="spec-badge">
+                            <div class="badge-val">3.1s</div>
+                            <div class="badge-lbl">0–60 MPH</div>
+                        </div>
+                        <div class="spec-badge">
+                            <div class="badge-val">295</div>
+                            <div class="badge-lbl">MI Range</div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <a href="bmw_model_specifications.html" class="btn btn-primary">Configure Yours</a>
+                        <a href="#" class="btn btn-outline">Request Test Drive</a>
+                    </div>
+                </div>
+
+                <div class="product-visuals fade-in" style="animation-delay: 0.2s;">
+                    <!-- Color Configurator Logic acts on this image ID -->
+                    <img id="hero-img" src="front-I7.avif" alt="BMW i7 M70 Front View" class="main-hero-img" fetchpriority="high" decoding="async">
+                    
+                    <div class="gallery-thumbnails">
+                        <img src="front-I7.avif" data-src="front-I7.avif" alt="Front" class="gallery-thumb active" decoding="async">
+                        <img src="side-I7.avif" data-src="side-I7.avif" alt="Side" class="gallery-thumb" decoding="async">
+                        <img src="rear-I7.avif" data-src="rear-I7.avif" alt="Rear" class="gallery-thumb" decoding="async">
+                        <img src="interior-I7.avif" data-src="interior-I7.avif" alt="Interior" class="gallery-thumb" decoding="async">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Color Configurator -->
+    <section class="features-section" style="padding: 2rem 0 4rem;">
+        <div class="container color-configurator scroll-animate">
+            <h2 class="section-title" style="font-size: 2rem;">Exterior Finish</h2>
+            <p class="section-desc">Design your own expression of power.</p>
+            
+            <div class="color-swatches">
+                <div class="color-swatch active" style="background-color: #0b0f19;" data-image="color_black.png"></div>
+                <div class="color-swatch" style="background-color: #d1d4d8;" data-image="color_white.png"></div>
+                <div class="color-swatch" style="background-color: #44474e;" data-image="color_grey.png"></div>
+                <div class="color-swatch" style="background-color: #7b1928;" data-image="color_red.png"></div>
+                <div class="color-swatch" style="background-color: #1a3250;" data-image="color_blue.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specification Tabs -->
+    <section class="specs-tabs-section scroll-animate">
+        <div class="container">
+            <div class="tab-nav">
+                <button class="tab-btn" data-target="overview">Overview</button>
+                <button class="tab-btn active" data-target="performance">Performance</button>
+                <button class="tab-btn" data-target="interior">Interior & Tech</button>
+                <button class="tab-btn" data-target="dimensions">Dimensions</button>
+                <button class="tab-btn" data-target="electric">Electric</button>
+            </div>
+            
+            <div class="tab-panes">
+                <!-- Overview Tab (Hidden) -->
+                <div id="overview" class="tab-pane">
+                    <p style="font-size: 1.125rem; max-width: 800px;">The BMW i7 M70 is the most powerful electric vehicle in the BMW portfolio. It features a dual-motor all-wheel drive setup outputting 660 horsepower, pushing the boundaries of what an executive luxury sedan can do.</p>
+                </div>
+                
+                <!-- Performance Tab (Active) -->
+                <div id="performance" class="tab-pane active">
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Top Speed</th>
+                                <td>155 mph</td>
+                            </tr>
+                            <tr>
+                                <th>Acceleration 0 - 60 mph</th>
+                                <td>3.1 sec</td>
+                            </tr>
+                            <tr>
+                                <th>Maximum Horsepower</th>
+                                <td>660 hp</td>
+                            </tr>
+                            <tr>
+                                <th>Maximum Torque</th>
+                                <td>748 lb-ft</td>
+                            </tr>
+                            <tr>
+                                <th>Transmission</th>
+                                <td>Single-speed automatic</td>
+                            </tr>
+                            <tr>
+                                <th>Drivetrain</th>
+                                <td>xDrive Dual-Motor All-Wheel Drive</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Interior Tab (Hidden) -->
+                <div id="interior" class="tab-pane">
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Upholstery</th>
+                                <td>Extended Merino Leather</td>
+                            </tr>
+                            <tr>
+                                <th>Display</th>
+                                <td>BMW Curved Display w/ OS 8.5</td>
+                            </tr>
+                            <tr>
+                                <th>Rear Entertainment</th>
+                                <td>31.3" BMW Theatre Screen (8K)</td>
+                            </tr>
+                            <tr>
+                                <th>Audio System</th>
+                                <td>Bowers & Wilkins Diamond Surround Sound</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Dimensions Tab (Hidden) -->
+                <div id="dimensions" class="tab-pane">
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Length</th>
+                                <td>212.2 inches</td>
+                            </tr>
+                            <tr>
+                                <th>Width</th>
+                                <td>76.8 inches</td>
+                            </tr>
+                            <tr>
+                                <th>Height</th>
+                                <td>60.8 inches</td>
+                            </tr>
+                            <tr>
+                                <th>Curb Weight</th>
+                                <td>5,920 lbs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Electric Tab (Hidden) -->
+                <div id="electric" class="tab-pane">
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Estimated Range</th>
+                                <td>Up to 295 miles</td>
+                            </tr>
+                            <tr>
+                                <th>Battery Capacity</th>
+                                <td>101.7 kWh (usable)</td>
+                            </tr>
+                            <tr>
+                                <th>DC Fast Charging (10-80%)</th>
+                                <td>34 minutes @ 195 kW</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid -->
+    <section class="features-section scroll-animate">
+        <div class="container">
+            <h2 class="section-title">Standard Equipment</h2>
+            <p class="section-desc">A masterpiece of engineering equipped with state-of-the-art innovations.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>xDrive AWD</h3>
+                    <p>Intelligent dual-motor all-wheel drive, proactively distributing power to the wheels for maximum traction.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>M Sport Suspension</h3>
+                    <p>Adaptive 2-axle air suspension perfectly tuned by BMW M for maximum dynamic handling and luxury comfort.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>BMW Theatre Screen</h3>
+                    <p>A colossal 31-inch display descending from the roof for cinematic rear-seat entertainment.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Harman Kardon Audio</h3>
+                    <p>Premium immersive surround sound perfectly balanced across the entire cabin.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Driving Assistant 2+</h3>
+                    <p>Hands-free automated driving on controlled access highways at speeds up to 85 mph.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Panoramic Sky Lounge</h3>
+                    <p>LED-illuminated panoramic glass roof with dynamic light patterns integrated into the glass.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Pricing Cards -->
+    <section class="packages-section scroll-animate">
+        <div class="container">
+            <h2 class="section-title">Upgrade Packages</h2>
+            <p class="section-desc">Tailor your i7 to absolute perfection.</p>
+            
+            <div class="packages-grid">
+                <!-- Base -->
+                <div class="package-card">
+                    <h3 class="package-title">Core Focus</h3>
+                    <div class="package-price">Included</div>
+                    <ul class="package-features">
+                        <li><span class="material-symbols-outlined">check</span> 20" M Aerodynamic Wheels</li>
+                        <li><span class="material-symbols-outlined">check</span> M Sport Brakes</li>
+                        <li><span class="material-symbols-outlined">check</span> Illuminated Kidney Grille</li>
+                        <li><span class="material-symbols-outlined">check</span> Extended Merino Leather</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Select</a>
+                </div>
+
+                <!-- Executive / Recommended -->
+                <div class="package-card recommended">
+                    <div class="package-badge">Recommended</div>
+                    <h3 class="package-title">Executive Package</h3>
+                    <div class="package-price">+₹4.60 L</div>
+                    <ul class="package-features">
+                        <li><span class="material-symbols-outlined">check</span> Automatic Doors</li>
+                        <li><span class="material-symbols-outlined">check</span> Crystal Headlights</li>
+                        <li><span class="material-symbols-outlined">check</span> Massaging Front Seats</li>
+                        <li><span class="material-symbols-outlined">check</span> Active Cruise Control Pro</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Select package</a>
+                </div>
+
+                <!-- M Sport Pro -->
+                <div class="package-card">
+                    <h3 class="package-title">M Sport Professional</h3>
+                    <div class="package-price">+₹1.50 L</div>
+                    <ul class="package-features">
+                        <li><span class="material-symbols-outlined">check</span> M Sport Brakes with Black Calipers</li>
+                        <li><span class="material-symbols-outlined">check</span> Extended Shadowline Trim</li>
+                        <li><span class="material-symbols-outlined">check</span> M Rear Spoiler</li>
+                        <li><span class="material-symbols-outlined">check</span> M Shadowline Lights</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Select</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Purchase Bar -->
+    <div class="sticky-purchase-bar">
+        <div class="container purchase-bar-content">
+            <div class="purchase-info">
+                <span class="purchase-model">BMW i7 M70</span>
+                <span class="purchase-price">As shown: ₹2.50 Cr</span>
+            </div>
+            <div class="purchase-actions">
+                <a href="#" class="btn btn-outline">Find in Stock</a>
+                <a href="bmw_model_specifications.html" class="btn btn-primary">Build & Price</a>
+            </div>
+        </div>
+    </div>
+    
+    </main>
+
+    <!-- JS -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+

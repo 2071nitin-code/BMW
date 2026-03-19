@@ -1,0 +1,404 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;600;700;900&family=Public+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+/* CSS Variables for Global Design System */
+:root {
+  --bmw-blue: #0653b6;
+  --bmw-light-blue: #6296d5;
+  --bg-dark-1: #000000;
+  --bg-dark-2: #1c1c1c;
+  --bg-dark-3: #120d0b;
+  
+  --bg-light-1: #ffffff;
+  --bg-light-2: #f8f6f6;
+
+  /* default dark mode */
+  --bg-color: var(--bg-dark-1);
+  --bg-secondary: var(--bg-dark-2);
+  --text-color: #ffffff;
+  --text-muted: #aaaaaa;
+  --border-color: #333333;
+  --card-bg: rgba(255, 255, 255, 0.05);
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body-landing: 'Inter', sans-serif;
+  --font-body-catalog: 'Public Sans', sans-serif;
+}
+
+[data-theme="light"] {
+  --bg-color: var(--bg-light-1);
+  --bg-secondary: var(--bg-light-2);
+  --text-color: var(--bg-dark-1);
+  --text-muted: #555555;
+  --border-color: #dddddd;
+  --card-bg: #ffffff;
+}
+
+/* Reset & Scaffolding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body-landing);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.catalog-page {
+  font-family: var(--font-body-catalog);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 2px solid var(--bmw-blue);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Base Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--bmw-blue);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #054191;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+.btn-outline:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 0;
+  transition: all 0.3s ease;
+}
+.navbar.transparent {
+  background: transparent;
+  color: #fff;
+}
+.navbar.scrolled {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 1rem 0;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-brand img {
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a.active {
+  color: var(--bmw-blue) !important;
+}
+
+[data-theme="light"] .navbar.scrolled .nav-links a.active {
+  color: var(--bmw-blue) !important;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--bmw-blue);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-actions .material-symbols-outlined {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-actions .material-symbols-outlined:hover {
+  color: var(--bmw-blue);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Sections Global */
+section {
+  padding: 6rem 0;
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.section-desc {
+  text-align: center;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+  font-size: 1.125rem;
+}
+
+/* About BMW Section */
+.about-bmw-section {
+    background-color: var(--bg-secondary);
+}
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+@media (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.about-stat .stat-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: var(--font-heading);
+    color: var(--bmw-blue);
+}
+.about-stat .stat-text {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-dark-3);
+    color: #fff;
+    padding: 4rem 0 2rem;
+    border-top: 1px solid #333;
+}
+
+/* Global Tab Navigation Customizations */
+.tab-nav {
+    display: flex;
+    gap: 2.5rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 3rem;
+    overflow-x: auto;
+    position: relative;
+    scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 1rem 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Overlaps border-bottom */
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--bmw-blue);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: var(--text-color);
+}
+.tab-btn:hover::after {
+    width: 100%;
+}
+
+.tab-btn.active {
+    color: var(--text-color) !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+.tab-btn.active::after {
+    width: 100%;
+    box-shadow: 0 0 12px var(--bmw-blue);
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+.tab-pane.active {
+    display: block;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark-1);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bmw-blue);
+}
+
