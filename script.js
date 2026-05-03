@@ -264,16 +264,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 9. Landbot Livechat Integration ---
-(function() {
-    var script = document.createElement('script');
-    script.type = 'module';
-    script.async = true;
-    script.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
-    script.onload = function() {
-        var myLandbot = new Landbot.Livechat({
-            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3416992-VME48XZQIRD8EJFD/index.json',
+// --- 9. Landbot Popup Integration ---
+window.addEventListener('mouseover', initLandbot, { once: true });
+window.addEventListener('touchstart', initLandbot, { once: true });
+var myLandbot;
+function initLandbot() {
+    if (!myLandbot) {
+        var s = document.createElement('script');
+        s.type = "module"
+        s.async = true;
+        s.addEventListener('load', function() {
+            myLandbot = new Landbot.Popup({
+                configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3416992-VME48XZQIRD8EJFD/index.json',
+            });
         });
-    };
-    document.head.appendChild(script);
-})();
+        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+        var x = document.getElementsByTagName('script')[0];
+        if (x && x.parentNode) {
+            x.parentNode.insertBefore(s, x);
+        } else {
+            document.head.appendChild(s);
+        }
+    }
+}
