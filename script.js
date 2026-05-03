@@ -264,26 +264,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 9. Landbot Popup Integration ---
+// The user's requested Landbot snippet, using Livechat so the native logo appears
 window.addEventListener('mouseover', initLandbot, { once: true });
 window.addEventListener('touchstart', initLandbot, { once: true });
 var myLandbot;
 function initLandbot() {
-    if (!myLandbot) {
-        var s = document.createElement('script');
-        s.type = "module"
-        s.async = true;
-        s.addEventListener('load', function() {
-            myLandbot = new Landbot.Livechat({
-                configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3416992-VME48XZQIRD8EJFD/index.json',
-            });
-        });
-        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        var x = document.getElementsByTagName('script')[0];
-        if (x && x.parentNode) {
-            x.parentNode.insertBefore(s, x);
-        } else {
-            document.head.appendChild(s);
-        }
+  if (!myLandbot) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.addEventListener('load', function() {
+      myLandbot = new Landbot.Livechat({
+        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3416992-VME48XZQIRD8EJFD/index.json',
+      });
+    });
+    s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+    var x = document.getElementsByTagName('script')[0];
+    if (x && x.parentNode) {
+      x.parentNode.insertBefore(s, x);
+    } else {
+      document.head.appendChild(s);
     }
+  }
 }
+// Automatically trigger for it to be visible immediately without hover if desired:
+// Or simply relying on the Livechat trigger which inserts the logo.

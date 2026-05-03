@@ -19,8 +19,9 @@
 
         /* ── PAGE HEADER ─────────────────────────────────────── */
         .page-header {
-            padding: 7rem 0 0;
-            background: var(--bg-color);
+            padding: 12rem 0 3rem;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, var(--bg-color) 100%), url('wallpaper.jpg') center/cover no-repeat;
+            position: relative;
         }
         .page-header-inner {
             display: flex;
@@ -31,17 +32,23 @@
             padding-bottom: 2rem;
         }
         .page-title {
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-family: var(--font-heading);
+            font-weight: 900;
+            text-transform: uppercase;
             line-height: 1;
             margin: 0;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
         .page-subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
             font-family: var(--font-body-catalog);
-            margin-top: 0.4rem;
+            margin-top: 0.8rem;
             font-weight: 400;
             text-transform: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         /* ── SEARCH BAR ───────────────────────────────────────── */
