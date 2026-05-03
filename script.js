@@ -263,3 +263,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// --- 9. Landbot Livechat Integration ---
+(function() {
+    var script = document.createElement('script');
+    script.type = 'module';
+    script.async = true;
+    script.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+    script.onload = function() {
+        var myLandbot = new Landbot.Livechat({
+            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3416992-VME48XZQIRD8EJFD/index.json',
+        });
+    };
+    document.head.appendChild(script);
+})();
